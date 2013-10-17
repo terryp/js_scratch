@@ -318,6 +318,7 @@ At this point I don't really know what a callback is. But what we do know is the
 
 When you scour the internet for information on callbacks awesome and frightening computer science terms get thrown out like:
 
+    - Closures
     - Functional Programming
     - Synchronous/Asynchronous
     - Blocking/Non-blocking
@@ -325,6 +326,8 @@ When you scour the internet for information on callbacks awesome and frightening
     - Deferreds
     - Event Handling
     - Threading
+
+I don't think I'm going to cover all of those. At it's essence and what I think I've been getting at as we cover functions is that there's a difference between the _defining_ a function and _executing_ a function. Since functions are first class citizens, they can be passed around to various elements in JavaScript but the important thing to note is that when we pass in function as an argument - we're not executing anything! We're simply passing a definition of a function. 
 
 */ 
 
@@ -352,5 +355,7 @@ When you scour the internet for information on callbacks awesome and frightening
 // - https://teaching.cs.uml.edu/~heines/91.461/resources/SlideSharePresentations/JavaScriptPatterns-SelfInvocation.pdf
 // 
 // - http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/
+//
+// - http://javascriptissexy.com/understand-javascript-closures-with-ease/
 //
 // - http://en.wikipedia.org/wiki/Callback_(computer_programming)
