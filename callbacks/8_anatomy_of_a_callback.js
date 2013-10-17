@@ -238,23 +238,95 @@ So what's the output! And let's break it down a little more.
     Hello, I'm the callback!        <- Here's the output from the anonymous
     Mind blown!                        function, we passed in as an argument.
 
+We did make a little leap though. So we need to step back a little and talk about functions a little more. 
+
 */
 
 console.log("\n");
 console.log("Step 3. Functions are first class citizens.");
 console.log("------------------")
 
-// You hear and read a lot of people say, "Functions are first class citizens!"
-// What does that mean? Per Crockford in "JavaScript: The Good Parts" he 
-// effectively summarizes it by saying that:
-//
-//      Functions are objects. 
-//      ...
-//      Since functions are objects, they can be used like any other value. 
-//      Functions can be stored in variables, objects and arrays.
-//
-// Let's try that.
+/*
 
+You hear and read a lot of people say, "Functions are first class citizens!"
+What does that mean? Per Crockford in "JavaScript: The Good Parts" he 
+effectively summarizes it by saying that:
+
+     Functions are objects. 
+     ...
+     Since functions are objects, they can be used like any other value. 
+     Functions can be stored in variables, objects and arrays.
+
+Let's try that.
+
+*/
+
+var a_variable_storing_a_function = function() {
+    console.log("Guess what? I'm a function in here.")
+}
+
+a_variable_storing_a_function();
+
+/* 
+
+These are super long variable names, but I'm trying to make the code examples as semantic as possible. I'm not going for style points and even if I were, stylistically as a programmer I'm pretty lame. 
+
+In the above example, I created a variable named "a_variable_storing_a_function." I assigned a function to that variable that says it's a function.
+
+*/ 
+
+var a_object = {}
+
+var a_variable_storing_a_function_to_go_into_an_object = function() {
+    console.log("Yep. Still a function in here.")
+}
+
+a_object.a_function = a_variable_storing_a_function_to_go_into_an_object;
+
+a_object.a_function();
+
+/*
+
+In this example, I made an empty object called "a_object." I then created another variable named "a_variable_storing_a_function_to_go_into_an_object" - wow that's long and would look awful in CamelCase. I digress. After we set up the object and the variable, the way we put something into an object is to assign it to a object property - in this case the property is called "a_function."
+
+*/
+
+var an_array = []
+an_array.push(a_variable_storing_a_function, a_variable_storing_a_function_to_go_into_an_object);
+
+console.log(an_array);
+
+for (var i = 0; i < an_array.length; i++) {
+    an_array[i]();
+}
+
+/* 
+
+OK, last one!
+
+Here I make an empty array and instead of writing more functions, I simply push the two functions I've written already into the array. Then I use a for loop to iterate over the array and one by one call the function!
+
+*/ 
+
+console.log("\n");
+console.log("Step 4. What is a callback?");
+console.log("------------------")
+
+/*
+
+At this point I don't really know what a callback is. But what we do know is the anatomy of functions and that functions are first class citizens when it comes to the world of JavaScript. 
+
+When you scour the internet for information on callbacks awesome and frightening computer science terms get thrown out like:
+
+    - Functional Programming
+    - Synchronous/Asynchronous
+    - Blocking/Non-blocking
+    - I/O
+    - Deferreds
+    - Event Handling
+    - Threading
+
+*/ 
 
 // function have_breakfast(food, drink, callback) {
 //     console.log("Having a breakfast of " + food + ", " + drink + ".");
@@ -278,3 +350,7 @@ console.log("------------------")
 // 
 // - http://stackoverflow.com/questions/111102/how-do-javascript-closures-work?rq=1
 // - https://teaching.cs.uml.edu/~heines/91.461/resources/SlideSharePresentations/JavaScriptPatterns-SelfInvocation.pdf
+// 
+// - http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/
+//
+// - http://en.wikipedia.org/wiki/Callback_(computer_programming)
