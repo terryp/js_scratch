@@ -1,85 +1,246 @@
 
+/* 
 
+Problem: I don't understand callbacks in JavaScript. And no matter how much Googling I've done and Stack Overflow research I've done - I'm still at a relative loss of understanding why I would want to use callbacks
+and how they really work. 
 
-// Problem: I don't understand callbacks in JavaScript. And no matter how
-// much Googling I've done and Stack Overflow research I've done - I'm still
-// at a relative loss of understanding why I would want to use callbacks
-// and how they really work. 
+Context: I don't really code that much. I'm a technology manager who used to code. And if that weren't bad enough, I've also avoided learning JavaScript for almost 15 solid years. Oh, I've bought the books. Yeah, I have Node.js installed on my machine. And yeah, I even thought CoffeeScript might be a solid way of avoiding learning about JavaScript. What I've found is that none of those things has helped me understand the notions of callbacks beyond having "faith." And since programming isn't a religious activity, I need some evidence. What lies before you is a Lester Bangs meets David Foster Wallace exploration of JavaScript callbacks from the bottom up. 
 
+*/
 
+console.log("\n");
 console.log("Step 1. Understanding functions.");
 console.log("------------------")
 
-// A function is a reusable piece of code with the following notion
-//  - Needs to be defined by the keyword "function."
-//  - Can optionally have a name - yeah this is weird, you can have
-//    a function that doesn't have a name it just does stuff. 
-//  - Can optionally have arguments. Collected in parentheses.
-//  - Is bounded by curly braces as the delimiters of it's scope. 
-//  - Has some kind of code that works in the middle. 
-//
-// So here's a basic function. 
-//  - It's called "greeting."
-//  - It requires a single argument called "string."
-//  - It has some curly braces. 
-//  - The code in the middle takes the string and creates a greeting string
-//    "Hello [ARG]!"
+/* 
 
-function greeting(string) {
+Before we can start understanding callbacks, we have to really drill down into the notion of functions. Callbacks happen in the context of functions - so if we don't understand functions we're not going to have a solid way of understanding callbacks. 
+
+Here's my take on functions: 
+    - A function is a reusable piece of code with the following notion
+    - Needs to be defined by the keyword "function."
+    - Can optionally have a name - yeah this is weird, you can have
+      a function that doesn't have a name it just does stuff. 
+    - Can optionally have arguments. Collected in parentheses.
+    - Is bounded by curly braces as the delimiters of it's scope. 
+    - Has some kind of code that works in the middle. 
+
+Functions are really the gateway drug of programming. Most programming tutorials teach you about functions, but functions allow you to organize and reuse pieces of code in ways that make your programs readable, sustainable, testable and just good. 
+
+So let's write a basic function. We'll call it "greeting" and we'll do the whole "Hello World!" thing. 
+
+*/
+
+function greeting_one(string) {
     console.log("Hello " + string + "!");
 }
 
-// Now we've defined a function. It's just sitting there in the code. 
-// If you want the function to do something, you actually need to call it. 
-// To call a function you simply write it's name and then add some 
-// parentheses. Like this. 
+/*
 
-greeting();
+So here's a basic function. 
+    - It's called "greeting."
+    - It requires a single argument called "string."
+    - It has some curly braces. 
+    - The code in the middle takes the string and creates a greeting string
+      "Hello [ARG]!"
 
-// This won't work though. When you run it you get the output:
-// Hello undefined!
-// It kind of worked, but if you recall our function requires a string. 
-// In the example above, we didn't pass in a string, so the code executes
-// but returns "undefined." So let's pass in a variable. 
+Now we've defined a function. It's just sitting there in the code. If you want the function to do something, you actually need to call it. To call a function you simply write it's name and then add some parentheses. Like this. 
 
-greeting("World");
+*/
+
+greeting_one();
+
+/* 
+
+This won't work though. When you run it you get the output:
+    
+    Hello undefined!
+
+OK, it kind of worked, we didn't get a traceback but if you recall our function requires a string. In the example above, we didn't pass in a string, so the code executes but returns "undefined." So let's pass in a variable. 
+
+*/ 
+
+greeting_one("World");
+
+/* 
+
+Now we get the output that we were thinking that we would get:
+
+     Hello World!
+
+So what about this notion of functions having optional names. 
+How does that work? We could write the same exact "greeting" function but
+not call it anything. 
+
+*/ 
 
 console.log("\n");
-
-// Now we get the output that we were thinking that we would get:
-//      Hello World!
-
-// So what about this notion of functions having optional names. 
-// How does that work? We could write the same exact "greeting" function but
-// not call it anything. 
-
 console.log("Step 2. Defining functions.");
 console.log("------------------")
 
-//
-// As a Pythonista, I take for granted the fact that there's basically only
-// one way to define a function in Python (OK, really there's 2 but that
-// deals with lambda functions which we might touch on later). In Python, 
-// defining a function is done like this:
-//
-//      >>> def greeting(string):
-//      ...     print "Hello %s!" % string
-//      ...
-//      >>> greeting("World")
-//      Hello World!
-//
-// JavaScript provides three different ways for programmers to define a 
-// function. 
-//  1. Using the function constructor
-//  2. Using function declaration
-//  3. Creating a function expression
-// 
-// Let's examine each one. Slightly more indepth. 
-//
-var greeting = function (string) {
+/* 
+
+As a Pythonista, I take for granted the fact that there's basically only one way to define a function in Python (OK, really there's 2 but that deals with lambda functions which we might touch on later). In Python, defining a function is done like this:
+
+     >>> def greeting(string):
+     ...     print "Hello %s!" % string
+     ...
+     >>> greeting("World")
+     Hello World!
+
+JavaScript provides three different ways for programmers to define a function. 
+    1. Using the function constructor
+    2. Using function declaration
+    3. Creating a function expression
+
+Let's examine each one. Slightly more indepth. We'll start with using the _function constructor_.
+
+Using the _function constructor_ is syntax similar to how you create new objects in JavaScript - maybe more on objects in the next session.  To use a function constructor you do it by using the keyword "new" followed by the keyword "Function" which is a reference to the base object of a JavaScript function. 
+
+Here's the same function that we wrote earlier but done in the _function constructor_ style.
+
+*/ 
+
+var greeting_two = new Function("string", "console.log('Hello ' + string + '!')");
+
+/*
+
+Right off the bat, you'll see a lot of differences. 
+    - No curly braces. 
+    - We're assigning the function to a variable. 
+    - The execution of the program is actually an argument passed to the 
+      Function object constructor. 
+
+Again, we've just defined the function. If we want it to work we need to call it. 
+
+*/ 
+
+greeting_two("World");
+
+/*
+
+Just like the first time we wrote this function, we get the same kind of output as before. 
+
+        Hello World!
+
+So while we wrote the function differently, the output was the same as before. 
+
+OK, so that's the _function constructor_ way of defining a function. Let's tackle _function declaration_ next. 
+
+Using _function declaration_ is basically what we did in the opening example in part one. This is how most programmers - OK, this is how I think about defining functions and it's the way I've done it in Perl, PHP, Ruby and Python.
+
+*/
+
+function greeting_three(string) {
     console.log("Hello " + string + "!");
 }
 
+/*
+
+Declaration means that we're creating a function and giving it a name. We have arguments in parentheses and we have code execution between the curly braces. As I mentioned already - which people are sick of - is that we've only defined the function. We still need to call it!
+
+*/ 
+
+greeting_three("World");
+
+/*
+
+Voila! We have our compelling output:
+
+    Hello World!
+
+Trust me, I understand how pedantic and boring this is. I'm the author who's just written some form of hello world a bunch of times. I swear this is going somewhere. I hope. 
+
+OK, the last way of writing a function in JavaScript is using a _function expression_. Here's the same greeting function using the _function expression_ way. 
+
+*/
+
+var greeting_four = function (string) { console.log("Hello " + string + "!"); }
+
+greeting_four("World");
+
+/*
+
+Wait a second, you just removed white space!
+
+Kind of. Kind of. The important element here is that JavaScript allows you to make function names optional when used in the context of _function expressions_. Optional is really optional so we could write the same function as:
+
+*/ 
+
+var greeting_five = function hello(string) { console.log("Hello " + string + "!"); }
+
+greeting_five("World");
+
+/* 
+
+There's a catch here - and it involves scope. We've defined the function hello in an inner scope. So an outer scope can't call it. So if we try to call hello(); we're going to come up undefined. IT'll look something like this:
+
+        hello();
+        ^
+        ReferenceError: hello is not defined
+
+The outer scope can't see the hello() function. 
+
+*/
+
+console.log("\n");
+console.log("Intermission / We're Talking About Callbacks Right?");
+console.log("------------------")
+
+/*
+
+So why exactly have we done all this, I though you were going to talk about callbacks and all you done is talk about functions?
+
+This is an excellent question. As I understand callbacks, there's some syntactical stangeness that's important to understand and if you don't understand the basic notion and rules of functions some of the more salient ideas of callbacks might be lost. 
+
+Here's what I think a callback looks like. 
+
+*/ 
+
+function function_with_a_callback(string, callback) {
+    console.log("< cue music >")
+    console.log("I'm a little function.");
+    console.log("Here's my string: " + string);
+    console.log("< /cue music >");
+    callback();
+}
+
+/*
+
+Here we've defined a function using the _function declaration_ method. Our function is named "function_with_a_callback." This function takes two arguments, the first one is a string and the second one is a callback. 
+
+Now remember, I've been saying over and over again (besides saying "Hello World!") that we've only defined a function, we haven't called it. So if we were to call it *knowing* that the second argument is a function it would look something like this:
+
+*/ 
+
+function_with_a_callback("Some String", function() {
+    console.log("Hello, I'm the callback!");
+    console.log("Mind blown!");
+});
+
+/*
+
+Right here is where - personally - my head gets a little blown up. Before we run away and check Hacker News for new stories, let's retreat to the function exploration we just did.
+
+    1. We created a function named "function_with_a_callback" using the 
+       _function declaration_ method. 
+    2. We called that function and passed in two arguments, just like 
+       the function expects!
+    3. However, the second argument is a anonymous function that we
+       created using the _function expression_ method. 
+
+So what's the output! And let's break it down a little more. 
+
+    < cue music >                   <- This is the output from our function
+    I'm a little function.
+    Here's my string: Some String
+    < /cue music >
+    Hello, I'm the callback!        <- Here's the output from the anonymous
+    Mind blown!                        function, we passed in as an argument.
+
+*/
+
+console.log("\n");
 console.log("Step 3. Functions are first class citizens.");
 console.log("------------------")
 
@@ -115,4 +276,5 @@ console.log("------------------")
 // 
 // - http://stackoverflow.com/questions/1140089/how-does-an-anonymous-function-in-javascript-work
 // 
-// 
+// - http://stackoverflow.com/questions/111102/how-do-javascript-closures-work?rq=1
+// - https://teaching.cs.uml.edu/~heines/91.461/resources/SlideSharePresentations/JavaScriptPatterns-SelfInvocation.pdf
