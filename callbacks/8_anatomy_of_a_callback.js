@@ -73,15 +73,16 @@ console.log("------------------")
 //  1. Using the function constructor
 //  2. Using function declaration
 //  3. Creating a function expression
+// 
+// Let's examine each one. Slightly more indepth. 
 //
 var greeting = function (string) {
     console.log("Hello " + string + "!");
 }
 
+console.log("Step 3. Functions are first class citizens.");
+console.log("------------------")
 
-
-// Step 2. Functions are first class citizens
-// 
 // You hear and read a lot of people say, "Functions are first class citizens!"
 // What does that mean? Per Crockford in "JavaScript: The Good Parts" he 
 // effectively summarizes it by saying that:
