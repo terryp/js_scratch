@@ -309,7 +309,7 @@ Here I make an empty array and instead of writing more functions, I simply push 
 */ 
 
 console.log("\n");
-console.log("Step 4. What is a callback?");
+console.log("Step 4. Wasn't this article about callbacks?");
 console.log("------------------")
 
 /*

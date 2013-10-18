@@ -1,7 +1,7 @@
 
 var arr = ["foo", "bar", "baz"];
 
-arr.forEach(function(x) { console.log(x.toUpperCase()); })
+arr.forEach(function(x, i) { console.log(i + x.toUpperCase()); })
 
 // var arr = [1,2,3,4,5];
 
