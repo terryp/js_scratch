@@ -334,7 +334,7 @@ At it's essence and what I think I've been getting at as we cover functions is t
 */ 
 
 console.log("\n");
-console.log("Step 5. Scope");
+console.log("Step 5. Scope Basics");
 console.log("------------------")
 
 /* 
@@ -390,7 +390,58 @@ more_learning_about_scope(function(x) {
 
 Here we retool the actual function that didn't work. We're trying to get at that variable inside of the function. We can access it with a CALLBACK! But you'll notice that when we invoke the function, we pass in some guessing variables named 'x' and yet our callback has access to the variables inside of the function!
 
+Let's dissect scope just a little bit more so we're sure we really get it. 
+
 */
+
+console.log("\n");
+console.log("Step 6. Scope, Getting a Slight More Complicated");
+console.log("------------------")
+
+// This is the global scope all the way out here
+
+var another_global_variable = "Hi. Just another global variable out here.";
+
+function another_function_about_scope(some_argument, callback) {
+    var another_inner_variable = "Hi. I'm a inner variable.";
+    // This is an inner scope
+    // This function has access to the outer global scope so it can access
+    // the 'another_global_variable' variable and it also has access to
+    // the inner scope so it has access to 'another_inner_variable'
+    //
+    // But now we're throwing a callback into the mix and that call back
+    // has access to what kind of scope?
+    if (callback && typeof(callback) === "function") {
+        callback(another_global_variable, 
+                 some_argument, 
+                 another_inner_variable);
+    }
+}
+
+another_function_about_scope("a string argument", function(global_var, arg, inner_var) {
+  console.log(global_var);
+  console.log(arg);
+  console.log(inner_var);
+});
+
+/* 
+
+In the example above we did some freaky stuff - I think. Basically we just demonstrated the a callback has access to all kinds of variables at both the global, inner and function call scope. Quite quite powerful, but not really useful if you're asking me. 
+
+*/
+
+console.log("\n");
+console.log("Step 7. Closures");
+console.log("------------------")
+
+/* 
+
+What we've been doing is playing with the notion of closures. When you have a function inside of a function, callback or not what you're doing is creating a closure. 
+
+"A closure is inner function that has access to the outer (read: enclosing) functions variables - scope chain. 
+
+*/
+
 
 // function have_breakfast(food, drink, callback) {
 //     console.log("Having a breakfast of " + food + ", " + drink + ".");
@@ -407,6 +458,9 @@ Here we retool the actual function that didn't work. We're trying to get at that
 
 Reference
 
+## Advanced JavaScript
+- http://ejohn.org/apps/learn/
+
 ## Variables and Scope
 - http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/
 
@@ -419,21 +473,15 @@ Reference
 
 ## Understanding Closures
 - http://stackoverflow.com/questions/111102/how-do-javascript-closures-work?rq=1
+- http://javascriptissexy.com/understand-javascript-closures-with-ease/
 - https://teaching.cs.uml.edu/~heines/91.461/resources/SlideSharePresentations/JavaScriptPatterns-SelfInvocation.pdf
 
 ## Understanding Callbacks
+- http://en.wikipedia.org/wiki/Callback_(computer_programming)
 - http://books.google.com/books?id=KGt-FxUEj48C&lpg=PT83&ots=CDs3N_gjUh&dq=anatomy%20of%20a%20javascript%20callback&pg=PT84#v=onepage&q=anatomy%20of%20a%20javascript%20callback&f=false
+- http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/
 
+## Understanding Async
+- http://javascriptplayground.com/blog/2013/06/think-async/
 
-
-// 
-// 
-// 
-// 
-// 
-// 
-// - http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/
-//
-// - http://javascriptissexy.com/understand-javascript-closures-with-ease/
-//
-// - http://en.wikipedia.org/wiki/Callback_(computer_programming)
+*/
