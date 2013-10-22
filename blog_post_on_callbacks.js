@@ -333,6 +333,65 @@ At it's essence and what I think I've been getting at as we cover functions is t
 
 */ 
 
+console.log("\n");
+console.log("Step 5. Scope");
+console.log("------------------")
+
+/* 
+
+A very compelling notion of callbacks and JavaScript functions is the notion of variable scope. Let's break down scope a little and work our way to the creepy notion of closures. This is kind of critical when it comes to understanding - deeply - the notion of callbacks. 
+
+Scope in JavaScript is kind of strange. There's a global scope. 
+
+*/
+
+var global_var = "Hi, I'm a global var."
+
+function learning_about_global_scope() {
+  console.log(global_var);
+}
+
+learning_about_global_scope();
+
+/*
+
+In the example above we defined a global variable called 'global_var' and then we defined a function called 'learning_about_global_scope.' In our function all we do is print out the global - we don't pass anything into the function because the function can see the global. 
+
+What if we define a variable inside of a function, can we see it globally?
+
+function more_learning_about_global_scope() {
+    var here_is_a_var = "Hi, I'm inside a function";
+}
+
+console.log(here_is_a_var);
+
+This example won't work. You'll get an error that says something to the effect of:
+
+    ReferenceError: here_is_a_var is not defined
+
+So what about an example that uses a callback. 
+
+*/ 
+
+function more_learning_about_scope(callback) {
+    var here_is_a_var = "Hi, I'm inside a function";
+    if (callback && typeof(callback) === "function" ) {
+        callback(here_is_a_var);    
+        console.log("Oh, yeah I can keep reaching out to the global scope!")
+        callback(global_var);
+    }
+}
+
+more_learning_about_scope(function(x) {
+    console.log(x);
+})
+
+/* 
+
+Here we retool the actual function that didn't work. We're trying to get at that variable inside of the function. We can access it with a CALLBACK! But you'll notice that when we invoke the function, we pass in some guessing variables named 'x' and yet our callback has access to the variables inside of the function!
+
+*/
+
 // function have_breakfast(food, drink, callback) {
 //     console.log("Having a breakfast of " + food + ", " + drink + ".");
 //     if (callback && typeof(callback) === "function") {
@@ -344,17 +403,34 @@ At it's essence and what I think I've been getting at as we cover functions is t
 //     console.log("Breakfast done, let's get to work!");
 // })
 
-// Reference
-// - http://googlecode.blogspot.com/2009/03/doug-crockford-javascript-good-parts.html
-//
-// - http://amzn.com/0596517742
-//
-// - http://books.google.com/books?id=KGt-FxUEj48C&lpg=PT83&ots=CDs3N_gjUh&dq=anatomy%20of%20a%20javascript%20callback&pg=PT84#v=onepage&q=anatomy%20of%20a%20javascript%20callback&f=false
+/* 
+
+Reference
+
+## Variables and Scope
+- http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/
+
+## Understanding Functions
+- http://googlecode.blogspot.com/2009/03/doug-crockford-javascript-good-parts.html
+- http://amzn.com/0596517742
+
+## Understanding Anonymous Functions
+- http://stackoverflow.com/questions/1140089/how-does-an-anonymous-function-in-javascript-work
+
+## Understanding Closures
+- http://stackoverflow.com/questions/111102/how-do-javascript-closures-work?rq=1
+- https://teaching.cs.uml.edu/~heines/91.461/resources/SlideSharePresentations/JavaScriptPatterns-SelfInvocation.pdf
+
+## Understanding Callbacks
+- http://books.google.com/books?id=KGt-FxUEj48C&lpg=PT83&ots=CDs3N_gjUh&dq=anatomy%20of%20a%20javascript%20callback&pg=PT84#v=onepage&q=anatomy%20of%20a%20javascript%20callback&f=false
+
+
+
 // 
-// - http://stackoverflow.com/questions/1140089/how-does-an-anonymous-function-in-javascript-work
 // 
-// - http://stackoverflow.com/questions/111102/how-do-javascript-closures-work?rq=1
-// - https://teaching.cs.uml.edu/~heines/91.461/resources/SlideSharePresentations/JavaScriptPatterns-SelfInvocation.pdf
+// 
+// 
+// 
 // 
 // - http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/
 //
