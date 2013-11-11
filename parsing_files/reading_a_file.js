@@ -23,18 +23,3 @@ files.forEach(function(file) {
 		process_file(data);
 	})
 })
-
-// for (var i = 0; i < files.length; i++) {
-// 	fs.readFileSync(files[i], 'utf8', function(err, data) {
-// 		console.log(files[i]);
-// 		console.log(data);
-// 	})
-// }
-
-// fs.readFile(path_1, 'utf8', function(err, data) {
-// 	if (err) {
-// 		console.log("Unable to read file.")
-// 	} else {
-// 		process_file(path_1, data);
-// 	}
-// })

@@ -24,7 +24,7 @@ var process_file = function(string) {
 
 fs.readdir(data_dir, function(err, files) {
 	if (err) {
-		console.log("Error reading files");
+		console.log("Error reading directory.");
 	} else {
 		files.forEach(function(file) {
 			file = path.join(data_dir, file);
@@ -32,8 +32,12 @@ fs.readdir(data_dir, function(err, files) {
 			// this bit do it's thing! It's actually going to 
 			// release control of the loop.
 			fs.readFile(file, 'utf8', function(err, data) {
-				console.log(file);
-				process_file(data);
+				if (err) {
+					console.log("Error reading file.");
+				} else {
+					console.log(file);
+					process_file(data);	
+				}
 			})
 			// So while this is way way way after the actual
 			// readfile operation ... due to the async nature 
