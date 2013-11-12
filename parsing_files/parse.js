@@ -17,8 +17,8 @@ var process_file = function(string) {
 		var paragraph_word_count = paragraphs[i].split(" ").length;
 		words += paragraph_word_count;
 	}
-	console.log("Paragraphs: " + paragraphs.length);
-	console.log("Words: " + words);
+	console.log("\t" + "Paragraphs: " + paragraphs.length);
+	console.log("\t" + "Words: " + words);
 	console.log("============== END =============");
 }
 
@@ -30,15 +30,17 @@ fs.readdir(data_dir, function(err, files) {
 			file = path.join(data_dir, file);
 			// This is asynchronous ... so Node is going to let
 			// this bit do it's thing! It's actually going to 
-			// release control of the loop.
+			// release control of the loop. And .....
 			fs.readFile(file, 'utf8', function(err, data) {
 				if (err) {
 					console.log("Error reading file.");
 				} else {
-					console.log(file);
+					file = file.split("/").slice(-1)[0]
+					console.log("Processing: " + file);
 					process_file(data);	
 				}
 			})
+			// .... Pick up right here! 
 			// So while this is way way way after the actual
 			// readfile operation ... due to the async nature 
 			// of the operation ... it actually gets printed
