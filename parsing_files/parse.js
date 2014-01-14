@@ -4,6 +4,7 @@
 
 // Thank god for the Google!
 // http://stevehanov.ca/blog/index.php?id=127
+// http://stackoverflow.com/questions/10058814/get-data-from-fs-readfile
 
 var fs = require('fs');
 var path = require('path');

@@ -483,5 +483,7 @@ Reference
 
 ## Understanding Async
 - http://javascriptplayground.com/blog/2013/06/think-async/
+- http://stackoverflow.com/questions/11233633/understanding-asynchronous-code-in-laymans-terms
+
 
 */
