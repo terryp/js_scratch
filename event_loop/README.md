@@ -10,3 +10,6 @@
 
 
 http://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/
+
+http://javascriptweblog.wordpress.com/2010/06/28/understanding-javascript-timers/
+

@@ -13,6 +13,7 @@ var data_dir = path.join(process.cwd(), "files");
 var process_file = function(string) {
 	var paragraphs = string.split("\n");
 	var words = 0;
+	// FIXME THIS SHOULD BE A FOR EACH
 	for (var i = 0; i < paragraphs.length; i++) {
 		var paragraph_word_count = paragraphs[i].split(" ").length;
 		words += paragraph_word_count;
@@ -45,7 +46,10 @@ fs.readdir(data_dir, function(err, files) {
 			// readfile operation ... due to the async nature 
 			// of the operation ... it actually gets printed
 			// out way way way before the callback finishes!
-			console.log("Hello!");
+			console.log("Hello Way Inner!");
 		})
 	}
+	console.log("Hello Almost Outer!")
 })
+
+console.log("Hello Outer!");
