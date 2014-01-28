@@ -1,6 +1,6 @@
 
 /* 
-
+ Hello
 Problem: I don't understand callbacks in JavaScript. And no matter how much Googling I've done and Stack Overflow research I've done - I'm still at a relative loss of understanding why I would want to use callbacks
 and how they really work. 
 
